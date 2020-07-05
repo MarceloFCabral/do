@@ -21,7 +21,7 @@ void prtDia(Semana *s, enum Dds d){
     printDia(s->dias[d]);
 }
 
-int addTarefa(Semana *s, enum Dds d, char *nome, char *horario_i, char *horario_f){ 
+int addTarefa(Semana *s, char *horario_f, char *horario_i, char *nome, enum Dds d){
     int inserido = 0;
     int *hi = parseTime(horario_i);
     int *hf = parseTime(horario_f);
@@ -92,4 +92,8 @@ void trcLista(Semana *s, enum Dds d1, enum Dds d2){
     Lista *tmp = s->dias[d1].l;
     s->dias[d1].l = s->dias[d2].l;
     s->dias[d2].l = tmp;
+}
+
+void trcTarefaDia(Semana *s, enum Dds src, enum Dds dest, char *nome_src){
+    inserir(s->dias[dest].l, remover(s->dias[src].l, nome_src, 1));
 }

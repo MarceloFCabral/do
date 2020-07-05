@@ -18,6 +18,7 @@ int main(int argc, char* argv[]){
         printf("[8] - Buscar e exibir uma tarefa na semana\n");
         printf("[9] - Trocar tarefas em dois dias diferentes da semana\n");
         printf("[10] - Trocar todas as tarefas de dois diferentes da semana\n");
+        printf("[11] - Trocar uma tarefa de dia\n");
         printf("Insira uma opcao: "); scanf("%d", &op);
         
         switch(op){
@@ -31,33 +32,35 @@ int main(int argc, char* argv[]){
                 prtDia(s, getDia());
                 break;
             case 3:
-                addTarefa(s, getDia(), getNome(), getHo(), getHo());
+                addTarefaCase(s); //infelizmente foi necessario encapsular a funcao addTarefa de "semana.c"
                 break;
+            case 4:
+                excTarefaI(s, getDia(), 0);
+                break;
+            case 5:
+                excTarefaF(s, getDia(), 0);
+                break;
+            case 6:
+                excTarefaCase(s);
+                break;
+            case 7:
+                prtTarefaCase(s);
+                break;
+            case 8:
+                prtTarefaSemanaCase(s);
+                break;
+            case 9:
+                trcTarefaCase(s);
+                break;
+            case 10:
+                trcLista(s, getDia(), getDia());
+                break;
+            case 11:
+                trcTarefaDiaCase(s);
             default:
-                printf("def\n");
+                printf("Opcao invalida\n");
                 break;
         }
     }
-       /*
-                char nome[101]; char hoi[6]; char hof[6];
-                int dia = getDia();
-                getchar();
-                getNome(nome);
-                getHo(hoi);
-                getchar();
-                getHo(hof);
-        addTarefa(s, dia, nome, hoi, hof);
-                char nome2[101]; char hoi2[6]; char hof2[6];
-                int dia2 = getDia();
-                getchar();
-                getNome(nome2);
-                getHo(hoi2);
-                getchar();
-                getHo(hof2);
-        addTarefa(s, dia2, nome2, hoi2, hof2);
-        printf("Nome da tarefa na primeira celula = %s\n", s->dias[Dom].l->primeiro->prox->t->nome);
-        printf("Nome da tarefa na ultima celula = %s\n", s->dias[Dom].l->ultimo->t->nome);
-        prtSemana(s);
-        */
     return 0;
 }
