@@ -32,7 +32,7 @@ int main(int argc, char* argv[]){
                 prtDia(s, getDia());
                 break;
             case 3:
-                addTarefaCase(s); //infelizmente foi necessario encapsular a funcao addTarefa de "semana.c"
+                addTarefaCase(s); //infelizmente foi necessario encapsular a funcao addTarefa de "semana.c". O mesmo serve para demais funcoes com "Case" no fim
                 break;
             case 4:
                 excTarefaI(s, getDia(), 0);

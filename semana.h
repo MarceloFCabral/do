@@ -5,6 +5,7 @@ typedef struct Semana{
     struct Semana *ant, *prox; //ponteiros serao usados em atualizacao para permitir o uso de meses;
 }Semana;
 
+//funcoes e metodos de administracao de dados da semana
 Semana* criarSemana();
 void prtSemana(Semana *s); //exibir todas as tarefas da semana (divididas por dia)
 void prtDia(Semana *s, enum Dds d); //exibir tarefas em um dia
@@ -19,3 +20,7 @@ void prtTarefaSemana(Semana *s, char *nome); //printar uma tarefa na semana busc
 void trcTarefa(Semana *s, enum Dds d1, enum Dds d2, char *nome_d1, char *nome_d2); //trocar duas tarefas em dias diferentes.
 void trcLista(Semana *s, enum Dds src, enum Dds dest); //trocar todas as tarefas de "src" para "dest"
 void trcTarefaDia(Semana *s, enum Dds src, enum Dds dest, char *nome_src); //troca uma tarefa de dia
+
+//funcoes e metodos de arquivamento e recuperacao de dados gravados em memoria secundaria
+Semana* readSemana();
+void saveSemana(Semana *s);

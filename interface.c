@@ -66,15 +66,15 @@ void trcTarefaCase(Semana *s){
 void trcTarefaDiaCase(Semana *s){
     Tarefa *t = NULL;
     char *nome = getNome();
-    getchar();
     printf("Insira o dia que contem a tarefa:\n");
     int src = getDia();
     printf("Insira o dia de destino:\n");
     int dest = getDia();
-    if( (t = bscTarefa(s, src, nome)) != NULL){
+    if( (t = bscTarefa(s, src, nome)) != NULL && checkTimeLista(t, s->dias[dest].l) ){
         trcTarefaDia(s, src, dest, nome);
     }else{
-        printf("Nao foi possivel trocar a tarefa de dia!\n");
+        printf("Nao foi possivel trocar a tarefa de dia! Horarios conflitantes ou tarefa inexistente!\n");
     }
     free(nome);
+    getchar();
 }

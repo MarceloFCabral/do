@@ -72,7 +72,7 @@ Tarefa* buscarTarefa(Lista *l, char *nome){
     return t;
 }
 
-int inserir(Lista *l, Tarefa *ta){ //retorna 0 se nao inserido, != 0 se inserido
+int inserir(Lista *l, Tarefa *ta){ //codigos: 0 -> nao inserido 
     int inserido = 0;
     if(ta != NULL){
         if(l->n == 0){
@@ -108,7 +108,7 @@ int inserir(Lista *l, Tarefa *ta){ //retorna 0 se nao inserido, != 0 se inserido
                 }
             }
 
-            if(i == l->n){
+            if(i == l->n && inserido != 0){
                 Celula *c = criarCelula(ta);
                 c->ant = l->ultimo;
                 l->ultimo = l->ultimo->prox = c;
