@@ -11,6 +11,6 @@ Tarefa* removerInicio(Lista *l, int op);
 Tarefa* removerFim(Lista *l, int op);
 Celula* buscarCel(Lista *l, char *nome);
 Tarefa* buscarTarefa(Lista *l, char *nome);
-int inserir(Lista *l, Tarefa *ta);
+int inserir(Lista *l, Tarefa *ta, int op);
 Tarefa* remover(Lista *l, char *nome, int op);
 void printLista(Lista *l);

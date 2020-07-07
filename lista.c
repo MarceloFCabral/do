@@ -72,7 +72,7 @@ Tarefa* buscarTarefa(Lista *l, char *nome){
     return t;
 }
 
-int inserir(Lista *l, Tarefa *ta){ //codigos: 0 -> nao inserido 
+int inserir(Lista *l, Tarefa *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inserido
     int inserido = 0;
     if(ta != NULL){
         if(l->n == 0){
@@ -80,8 +80,7 @@ int inserir(Lista *l, Tarefa *ta){ //codigos: 0 -> nao inserido
             l->primeiro->prox = c;
             c->ant = l->primeiro;
             l->ultimo = c;
-            printf("Tarefa inserida:");
-            printTarefa(ta);
+            if(op){printf("Tarefa inserida:"); printTarefa(ta);}
             inserido = 1;
             l->n++;
         }else{
@@ -98,8 +97,7 @@ int inserir(Lista *l, Tarefa *ta){ //codigos: 0 -> nao inserido
                     c->ant = tmp->ant;
                     tmp->ant->prox = c;
                     tmp->ant = c;
-                    printf("Tarefa inserida:");
-                    printTarefa(ta);
+                    if(op){printf("Tarefa inserida:"); printTarefa(ta);}
                     inserido = 1;
                     l->n++;
                     tmp = NULL;
@@ -112,8 +110,7 @@ int inserir(Lista *l, Tarefa *ta){ //codigos: 0 -> nao inserido
                 Celula *c = criarCelula(ta);
                 c->ant = l->ultimo;
                 l->ultimo = l->ultimo->prox = c;
-                printf("Tarefa inserida:");
-                printTarefa(ta);
+                if(op){printf("Tarefa inserida:"); printTarefa(ta);}
                 inserido = 1;
                 l->n++;
             }

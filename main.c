@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]){
     printf("Bem-vindo 'a agenda semanal \"Do\"\n");
-    Semana *s = criarSemana();
+    Semana *s = readSemana();
     int status = 1;
     while(status){
         int op = -1;
@@ -19,6 +19,7 @@ int main(int argc, char* argv[]){
         printf("[9] - Trocar tarefas em dois dias diferentes da semana\n");
         printf("[10] - Trocar todas as tarefas de dois diferentes da semana\n");
         printf("[11] - Trocar uma tarefa de dia\n");
+        printf("[12] - Salvar semana\n");
         printf("Insira uma opcao: "); scanf("%d", &op);
         
         switch(op){
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]){
                 prtDia(s, getDia());
                 break;
             case 3:
-                addTarefaCase(s); //infelizmente foi necessario encapsular a funcao addTarefa de "semana.c". O mesmo serve para demais funcoes com "Case" no fim
+                addTarefaCase(s, 1); //infelizmente foi necessario encapsular a funcao addTarefa de "semana.c". O mesmo serve para demais funcoes com "Case" no fim
                 break;
             case 4:
                 excTarefaI(s, getDia(), 0);
@@ -57,8 +58,13 @@ int main(int argc, char* argv[]){
                 break;
             case 11:
                 trcTarefaDiaCase(s);
+                break;
+            case 12:
+                saveSemana(s);
+                break;
             default:
                 printf("Opcao invalida\n");
+                getchar();
                 break;
         }
     }

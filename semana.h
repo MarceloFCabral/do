@@ -9,7 +9,7 @@ typedef struct Semana{
 Semana* criarSemana();
 void prtSemana(Semana *s); //exibir todas as tarefas da semana (divididas por dia)
 void prtDia(Semana *s, enum Dds d); //exibir tarefas em um dia
-int addTarefa(Semana *s, char *horario_f, char *horario_i, char *nome, enum Dds d);
+int addTarefa(Semana *s, char *horario_f, char *horario_i, char *nome, enum Dds d, int op);
 Tarefa* excTarefaI(Semana *s, enum Dds d, int op); //excluir tarefa no inicio de um dia
 Tarefa* excTarefaF(Semana *s, enum Dds d, int op); //excluir tarefa no fim de um dia
 Tarefa* excTarefa(Semana *s, enum Dds d, char *nome, int op); //excluir em qualquer posicao de um dia

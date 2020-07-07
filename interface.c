@@ -25,12 +25,12 @@ char* getHo(int op){
     fgets(str, 6, stdin);
 }
 
-void addTarefaCase(Semana *s){
+void addTarefaCase(Semana *s, int op){
     char *nome = getNome();
     int dia = getDia();
     char *hoI = getHo(0);
     char *hoF = getHo(1);
-    addTarefa(s, hoF, hoI, nome, dia);
+    addTarefa(s, hoF, hoI, nome, dia, op);
     free(hoI); free(hoF);
 }
 

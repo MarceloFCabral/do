@@ -21,13 +21,13 @@ void prtDia(Semana *s, enum Dds d){
     printDia(s->dias[d]);
 }
 
-int addTarefa(Semana *s, char *horario_f, char *horario_i, char *nome, enum Dds d){
+int addTarefa(Semana *s, char *horario_f, char *horario_i, char *nome, enum Dds d, int op){ // op == 1 -> insercao de novo dado, op == 0 -> carregamento
     int inserido = 0;
     int *hi = parseTime(horario_i);
     int *hf = parseTime(horario_f);
     if(hi != NULL && hf != NULL){
-        printf("--> Em %s:\n", getNomeDia(d));
-        inserido = inserir(s->dias[d].l, criarTarefa(nome, criarHorario(hi[0], hi[1], hf[0], hf[1])));
+        if(op){printf("--> Em %s:\n", getNomeDia(d));}
+        inserido = inserir(s->dias[d].l, criarTarefa(nome, criarHorario(hi[0], hi[1], hf[0], hf[1])), op);
     }else{
         printf("Horario inserido e invalido!\n");
     }
@@ -49,7 +49,7 @@ Tarefa* excTarefa(Semana *s, enum Dds d, char *nome, int op){
     return remover(s->dias[d].l, nome, op);
 }
 
-Tarefa* bscTarefa(Semana *s, enum Dds d, char *nome){
+Tarefa* bscTarefa(Semana *s, enum Dds d, char *nome){ //uso interno
     return buscarTarefa(s->dias[d].l, nome);
 }
 
@@ -83,6 +83,7 @@ void trcTarefa(Semana *s, enum Dds d1, enum Dds d2, char *nome_d1, char *nome_d2
         Tarefa *tmp = c1->t;
         c1->t = c2->t;
         c2->t = tmp;
+        printf("Troca realizada!\n");
     }else{
         printf("Nao foi possivel trocar!\n");
     }
@@ -92,8 +93,54 @@ void trcLista(Semana *s, enum Dds d1, enum Dds d2){
     Lista *tmp = s->dias[d1].l;
     s->dias[d1].l = s->dias[d2].l;
     s->dias[d2].l = tmp;
+    printf("Troca realizada!\n");
 }
 
 void trcTarefaDia(Semana *s, enum Dds src, enum Dds dest, char *nome_src){
-    inserir(s->dias[dest].l, remover(s->dias[src].l, nome_src, 1));
+    inserir(s->dias[dest].l, remover(s->dias[src].l, nome_src, 1), 0) ? printf("Troca realizada!\n") : printf("Nao foi possivel realizar a troca!\n");
+}
+
+//funcoes de leitura e gravacao em memoria secundaria
+//leitura
+Semana* readSemana(){
+    FILE *f = fopen("semana.txt", "r");
+    Semana *s = criarSemana();
+    if(f == NULL){
+        printf("Nao foi possivel encontrar uma semana. Criando nova semana\n");
+    }else{
+        int dia = 0;
+        fscanf(f, "%d", &dia);
+        while(dia != -1){
+            int n_tarefas = 0;
+            fscanf(f, "%d", &n_tarefas);
+            for(int i = 0; i < n_tarefas; i++){
+                char *nome = (char*) malloc(sizeof(char)*101);
+                char horario_i[6]; char horario_f[6];
+                fscanf(f, "%s %s %s", nome, horario_i, horario_f);
+                addTarefa(s, horario_f, horario_i, nome, dia, 0);
+            }
+            fscanf(f, "%d", &dia);
+        }
+        printf("Semana carregada!\n");
+        fclose(f);
+    }
+    return s;
+}
+
+//escrita
+void saveSemana(Semana *s){
+    printf("Salvando semana...\n");
+    FILE *f = fopen("semana.txt", "w");
+    for(int i = Dom; i <= Sab; i++){
+        Lista *l = s->dias[i].l;
+        fprintf(f, "%d\n", i);
+        fprintf(f, "%d\n", l->n);
+        for(Celula *tmp = l->primeiro->prox; tmp != NULL; tmp = tmp->prox){
+            fprintf(f, "%s\n", tmp->t->nome);
+            fprintf(f, "%02d:%02d\n", tmp->t->ho->i_h, tmp->t->ho->i_m);
+            fprintf(f, "%02d:%02d\n", tmp->t->ho->f_h, tmp->t->ho->f_m);
+        }
+    }
+    fprintf(f, "%d", -1);
+    fclose(f);
 }
