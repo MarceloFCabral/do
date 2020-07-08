@@ -1,12 +1,11 @@
-#include"semana.c"
+#include"week.c"
 
-int getDia();
-int getOp();
-char* getNome();
-char* getHo();
-void addTarefaCase(Semana *s, int op);
-void excTarefaCase(Semana *s);
-void prtTarefaCase(Semana *s);
-void prtTarefaSemanaCase(Semana *s);
-void trcTarefaCase(Semana *s);
-void trcTarefaDiaCase(Semana *s);
+int getDay();
+char* getName();
+char* getTT();
+void addTaskCase(Week *w, int op);
+void excTaskCase(Week *w);
+void prtTaskCase(Week *w);
+void prtWeekTasksCase(Week *w);
+void swpTasksCase(Week *w);
+void cngTaskDayCase(Week *w);

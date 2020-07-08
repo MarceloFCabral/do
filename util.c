@@ -1,47 +1,47 @@
-#include"tarefa.c"
+#include"task.c"
 #ifndef UTIL_C
 #define UTIL_C
 
-int checkTime(Tarefa *t1, Tarefa *t2){ //t1 = tarefa a ser inserida na lista. return 0 se horario de t1 ou t2 for invalido, 1 se for valido
-    int res = 0;
-    Horario *ho1 = t1->ho, *ho2 = t2->ho;
-    if( (ho1->i_time > ho1->f_time)                                ||
-        (ho1->i_time >= ho2->i_time && ho1->i_time < ho2->f_time)  ||
-        (ho1->f_time > ho2->i_time  && ho1->f_time <= ho2->f_time) ||
-        (ho1->i_time <= ho2->i_time && ho1->f_time >= ho2->f_time) ){ //tarefa em horario invalido;
+int checkTime(Task *t1, Task *t2){ //t1 = tarefa a ser inserida na List. return 0 se tt de t1 ou t2 for invalido, 1 se for valido
+    int ans = 0;
+    TaskTime *tt1 = t1->tt, *tt2 = t2->tt;
+    if( (tt1->b_time > tt1->e_time)                                ||
+        (tt1->b_time >= tt2->b_time && tt1->b_time < tt2->e_time)  ||
+        (tt1->e_time > tt2->b_time  && tt1->e_time <= tt2->e_time) ||
+        (tt1->b_time <= tt2->b_time && tt1->e_time >= tt2->e_time) ){ //tarefa em tt invalido;
         
-            res = 0;
+            ans = 0;
 
-    }else if(ho1->i_time < ho2->i_time && ho1->f_time <= ho2->i_time){
+    }else if(tt1->b_time < tt2->b_time && tt1->e_time <= tt2->b_time){
 
-            res = -1; //tarefa 1 com horario menor do que a tarefa 2;
+            ans = -1; //tarefa 1 com tt menor do que a tarefa 2;
     }else{
-            res = 1; //tarefa 1 com horario maior do que a tarefa 2;
+            ans = 1; //tarefa 1 com tt maior do que a tarefa 2;
     }
-    return res;
+    return ans;
 }
 
-int checkTimeLista(Tarefa *t, Lista *l){ //verifica se uma tarefa e inserivel em uma determinada lista (dia)
-    int res = 1, i = 0;
-    Celula *tmp = l->primeiro->prox;
-    for(tmp; tmp != NULL && ( (res = checkTime(t, tmp->t)) != 0 && res != -1); tmp = tmp->prox);
-    return res; //se res != 0, e inserivel.
+int checkTimeList(Task *t, List *l){ //verifica se uma tarefa e inserivel em uma deTueminada List (Day)
+    int ans = 1, i = 0;
+    Cell *tmp = l->first->next;
+    for(tmp; tmp != NULL && ( (ans = checkTime(t, tmp->t)) != 0 && ans != -1); tmp = tmp->next);
+    return ans; //se ans != 0, e inserivel.
 }
 
 int* parseTime(char *time){
-    int *res = NULL;
+    int *ans = NULL;
     if(strlen(time) >= 5){
-        res = (int*) malloc(sizeof(int)*2);
+        ans = (int*) malloc(sizeof(int)*2);
         char str_h[3] = {'\0', '\0', '\0'};
         char str_m[3] = {'\0', '\0', '\0'};
         for(int i = 0; i < 2; i++){
             str_h[i] = time[i];
             str_m[i] = time[i+3];
         }
-        res[0] = atoi(str_h);
-        res[1] = atoi(str_m);
+        ans[0] = atoi(str_h);
+        ans[1] = atoi(str_m);
     }
-    return res;
+    return ans;
 }
 
 #endif

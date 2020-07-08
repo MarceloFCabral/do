@@ -1,69 +1,69 @@
 #include"interface.c"
 
 int main(int argc, char* argv[]){
-    printf("Bem-vindo 'a agenda semanal \"Do\"\n");
-    Semana *s = readSemana();
+    printf("Welcome to \"Do\", your weekly agenda.\n");
+    Week *w = readWeek();
     int status = 1;
     while(status){
         int op = -1;
-        printf("O que deseja?\n");
-        printf("[0] - Sair\n");
-        printf("[1] - Visualizar tarefas da semana\n");
-        printf("[2] - Visualizar tarefas em um dia da semana\n");
-        printf("[3] - Criar uma tarefa\n");
-        printf("[4] - Excluir a primeira tarefa de um dia\n");
-        printf("[5] - Excluir a ultima tarefa de um dia\n");
-        printf("[6] - Excluir outra tarefa de um dia\n");
-        printf("[7] - Exibir uma tarefa de um dia semana\n");
-        printf("[8] - Buscar e exibir uma tarefa na semana\n");
-        printf("[9] - Trocar tarefas em dois dias diferentes da semana\n");
-        printf("[10] - Trocar todas as tarefas de dois diferentes da semana\n");
-        printf("[11] - Trocar uma tarefa de dia\n");
-        printf("[12] - Salvar semana\n");
-        printf("Insira uma opcao: "); scanf("%d", &op);
+        printf("What do you wish to do?\n");
+        printf("[0] - Exit\n");
+        printf("[1] - View all the tasks of the week\n");
+        printf("[2] - View tasks on a certain day\n");
+        printf("[3] - Create a new task\n");
+        printf("[4] - Exclude the first task of a day\n");
+        printf("[5] - Exclude the last task of a day\n");
+        printf("[6] - Exclude a task of a day\n");
+        printf("[7] - View a task on a certain day\n");
+        printf("[8] - Search for and view a task on the week\n");
+        printf("[9] - Swap two tasks between different days\n");
+        printf("[10] - Swap all the tasks between different days\n");
+        printf("[11] - Change a task's day\n");
+        printf("[12] - Save changes\n");
+        printf("Please type in an option: "); scanf("%d", &op);
         
         switch(op){
             case 0:
                 status = 0;
                 break;
             case 1:
-                prtSemana(s);
+                prtWeek(w);
                 break;
             case 2:
-                prtDia(s, getDia());
+                prtDay(w, getDay());
                 break;
             case 3:
-                addTarefaCase(s, 1); //infelizmente foi necessario encapsular a funcao addTarefa de "semana.c". O mesmo serve para demais funcoes com "Case" no fim
+                addTaskCase(w, 1); //infelizmente foi necessario encapsular a funcao addTask de "Week.c". O mesmo serve para demais funcoes com "Case" no fim
                 break;
             case 4:
-                excTarefaI(s, getDia(), 0);
+                excTaskB(w, getDay(), 0);
                 break;
             case 5:
-                excTarefaF(s, getDia(), 0);
+                excTaskE(w, getDay(), 0);
                 break;
             case 6:
-                excTarefaCase(s);
+                excTaskCase(w);
                 break;
             case 7:
-                prtTarefaCase(s);
+                prtTaskCase(w);
                 break;
             case 8:
-                prtTarefaSemanaCase(s);
+                prtWeekTasksCase(w);
                 break;
             case 9:
-                trcTarefaCase(s);
+                swpTasksCase(w);
                 break;
             case 10:
-                trcLista(s, getDia(), getDia());
+                swpLists(w, getDay(), getDay());
                 break;
             case 11:
-                trcTarefaDiaCase(s);
+                cngTaskDayCase(w);
                 break;
             case 12:
-                saveSemana(s);
+                saveWeek(w);
                 break;
             default:
-                printf("Opcao invalida\n");
+                printf("Invalid option!\n");
                 getchar();
                 break;
         }
