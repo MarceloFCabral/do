@@ -26,8 +26,8 @@ int addTask(Week *s, char *e_tt_str, char *b_tt_str, char *name, enum DotW d, in
     int *b_tt = parseTime(b_tt_str);
     int *e_tt = parseTime(e_tt_str);
     if(b_tt != NULL && e_tt != NULL){
-        if(op){printf("--> Em %s:\n", getDayName(d));}
-        inserted = insert(s->days[d].l, createTask(name, createTaskTime(b_tt[0], b_tt[1], e_tt[0], e_tt[1])), op);
+        if(op){printf("--> On %s:\n", getDayName(d));}
+        inserted = insertTask(s->days[d].l, createTask(name, createTaskTime(b_tt[0], b_tt[1], e_tt[0], e_tt[1])), op);
     }else{
         printf("Invalid task time!\n");
     }
@@ -35,18 +35,18 @@ int addTask(Week *s, char *e_tt_str, char *b_tt_str, char *name, enum DotW d, in
 }
 
 Task* excTaskB(Week *s, enum DotW d, int op){
-    printf("--> Em %s:\n", getDayName(d));
+    printf("--> On %s:\n", getDayName(d));
     return removeFront(s->days[d].l, op);
 }
 
 Task* excTaskE(Week *s, enum DotW d, int op){
-    printf("--> Em %s:\n", getDayName(d));
+    printf("--> On %s:\n", getDayName(d));
     return removeEnd(s->days[d].l, op);
 }
 
 Task* excTask(Week *s, enum DotW d, char *name, int op){
-    printf("--> Em %s:\n", getDayName(d));
-    return remove(s->days[d].l, name, op);
+    printf("--> On %s:\n", getDayName(d));
+    return removeTaskFromList(s->days[d].l, name, op);
 }
 
 Task* getTask(Week *s, enum DotW d, char *name){ //uso inTueno
@@ -62,17 +62,17 @@ Day getTaskWeek(Week *s, char *name){ //ATENCAO: diferente das outras funcoes de
 }
 
 void prtTask(Week *s, enum DotW d, char *name){
-    printf("--> Em %s:", getDayName(d));
+    printf("--> On %s:", getDayName(d));
     printTask(getTask(s, d, name));
 }
 
 void prtTaskWeek(Week *s, char *name){
-    Day Day = getTaskWeek(s, name);
-    if(Day.l != NULL){
-        printf("--> Em %s:", getDayName(Day.d));
-        printTask(getTask(s, Day.d, name));
+    Day day = getTaskWeek(s, name);
+    if(day.l != NULL){
+        printf("--> On %s:", getDayName(day.d));
+        printTask(getTask(s, day.d, name));
     }else{
-        printf("Task nao encontrada na Week!\n");
+        printf("Task not found!\n");
     }
 }
 
@@ -83,9 +83,9 @@ void swpTasks(Week *s, enum DotW d1, enum DotW d2, char *name_d1, char *name_d2)
         Task *tmp = c1->t;
         c1->t = c2->t;
         c2->t = tmp;
-        printf("Troca realizada!\n");
+        printf("Tasks swapped!\n");
     }else{
-        printf("Nao foi possivel trocar!\n");
+        printf("Error: couldn't swap tasks.\n");
     }
 }
 
@@ -93,46 +93,51 @@ void swpLists(Week *s, enum DotW d1, enum DotW d2){
     List *tmp = s->days[d1].l;
     s->days[d1].l = s->days[d2].l;
     s->days[d2].l = tmp;
-    printf("Troca realizada!\n");
+    printf("Tasks swapped!\n");
 }
 
 void cngTaskDay(Week *s, enum DotW src, enum DotW dest, char *name_src){
-    insert(s->days[dest].l, remove(s->days[src].l, name_src, 1), 0) ? printf("Troca realizada!\n") : printf("Nao foi possivel realizar a troca!\n");
+    insertTask(s->days[dest].l, removeTaskFromList(s->days[src].l, name_src, 1), 0) ? printf("Task day changed.\n") : printf("Error: couldn't swap task day\n");
 }
 
 //funcoes de leitura e gravacao em memoria secundaria
 //leitura
 Week* readWeek(){
-    FILE *f = fopen("Week.txt", "r");
-    Week *s = createWeek();
+    FILE *f = fopen("week.txt", "r");
+    Week *w = createWeek();
     if(f == NULL){
-        printf("Nao foi possivel encontrar uma Week. Criando nova Week\n");
+        printf("Couldn't load a week file. Creating new week file\n");
     }else{
-        int Day = 0;
-        fscanf(f, "%d", &Day);
-        while(Day != -1){
-            int n_tarefas = 0;
-            fscanf(f, "%d", &n_tarefas);
-            for(int i = 0; i < n_tarefas; i++){
+        int day = 0;
+        fscanf(f, "%d", &day);
+        while(day != -1){
+            int n_tasks = 0;
+            fscanf(f, "%d", &n_tasks);
+            for(int i = 0; i < n_tasks; i++){
                 char *name = (char*) malloc(sizeof(char)*101);
-                char b_tt[6]; char e_tt[6];
-                fscanf(f, "%s %s %s", name, b_tt, e_tt);
-                addTask(s, e_tt, b_tt, name, Day, 0);
+                char buf[2]; char b_tt[6]; char e_tt[6];
+                
+                fgets(buf, 2, f); //discard newline character from previous line
+
+                fgets(name, 101, f);
+                name[strlen(name)-1] = '\0';
+                fscanf(f, "%s %s", b_tt, e_tt);
+                addTask(w, e_tt, b_tt, name, day, 0);
             }
-            fscanf(f, "%d", &Day);
+            fscanf(f, "%d", &day);
         }
-        printf("Week carregada!\n");
+        printf("Week file loaded!\n");
         fclose(f);
     }
-    return s;
+    return w;
 }
 
 //escrita
-void saveWeek(Week *s){
-    printf("Salvando Week...\n");
-    FILE *f = fopen("Week.txt", "w");
+void saveWeek(Week *w){
+    printf("Saving changes...\n");
+    FILE *f = fopen("week.txt", "w");
     for(int i = Sun; i <= Sat; i++){
-        List *l = s->days[i].l;
+        List *l = w->days[i].l;
         fprintf(f, "%d\n", i);
         fprintf(f, "%d\n", l->n);
         for(Cell *tmp = l->first->next; tmp != NULL; tmp = tmp->next){

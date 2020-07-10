@@ -1,6 +1,17 @@
 #include"interface.c"
-
+#include<iup/iup.h>
 int main(int argc, char* argv[]){
+    
+    /*Testing IUP UI message window*/
+    Ihandle *dlg, *label;
+    IupOpen(&argc, &argv);
+    label = IupLabel("Welcome to \"Do\", your weekly agenda.");
+    dlg = IupDialog(IupVbox(label, NULL));
+    IupSetAttribute(dlg, "TITLE", "Do");
+    IupShowXY(dlg, IUP_CENTER, IUP_CENTER);
+    IupMainLoop();
+    IupClose();
+
     printf("Welcome to \"Do\", your weekly agenda.\n");
     Week *w = readWeek();
     int status = 1;

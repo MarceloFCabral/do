@@ -14,7 +14,7 @@ Task* removeCell(Cell *c, int op){ //0 -> desalocar tarefa; op != 0 -> retornar 
         if(c->prev != NULL){c->prev->next = c->next;}
         if(c->next != NULL){c->next->prev = c->prev;}
         c->prev = c->next = NULL;
-        printf("Task removida:");
+        printf("Removed task:");
         printTask(c->t);
         remov = removeTask(c->t, op);
         free(c);

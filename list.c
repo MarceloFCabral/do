@@ -25,7 +25,7 @@ Cell* removeList(List* l, int op){ //op == 0 -> desalocar List; op != 0 -> retor
 Task* removeFront(List *l, int op){ //idem
     Task *remov = NULL;
     if(l->n == 0){
-        printf("Nao ha tarefas!");
+        printf("There are no tasks!");
     }else{
         remov = removeCell(l->first->next, op);
         l->n--;
@@ -36,7 +36,7 @@ Task* removeFront(List *l, int op){ //idem
 Task* removeEnd(List *l, int op){ //idem
     Task *remov = NULL;
     if(l->n == 0){
-        printf("Nao ha tarefas!");
+        printf("There are no tasks!");
     }else{
         Cell *tmp = l->last;
         l->last = l->last->prev;
@@ -55,7 +55,7 @@ Cell* searchForCell(List *l, char *name){
         }
     }
 
-    if(c == NULL){printf("Cell que contem esta tarefa nao encontrada!\n");}
+    if(c == NULL){printf("Couldn't find the cell that contains this task!\n");}
     return c;
 }
 
@@ -68,11 +68,11 @@ Task* searchForTask(List *l, char *name){
         }
     }
 
-    if(t == NULL){printf("Task nao encontrada!\n");}
+    if(t == NULL){printf("Task not found!\n");}
     return t;
 }
 
-int insert(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inserido
+int insertTask(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inserido
     int inserido = 0;
     if(ta != NULL){
         if(l->n == 0){
@@ -80,7 +80,7 @@ int insert(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inseri
             l->first->next = c;
             c->prev = l->first;
             l->last = c;
-            if(op){printf("Task inserida:"); printTask(ta);}
+            if(op){printf("Added task:"); printTask(ta);}
             inserido = 1;
             l->n++;
         }else{
@@ -89,7 +89,7 @@ int insert(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inseri
             for(i; tmp != NULL && i < l->n; i++){
                 Task *tb = tmp->t;
                 if( (inserido = checkTime(ta, tb)) == 0){
-                    printf("TaskTime invalido!\n");
+                    printf("Invalid task time!\n");
                     tmp = NULL;
                 }else if(inserido == -1){
                     Cell *c = createCell(ta);
@@ -97,7 +97,7 @@ int insert(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inseri
                     c->prev = tmp->prev;
                     tmp->prev->next = c;
                     tmp->prev = c;
-                    if(op){printf("Task inserida:"); printTask(ta);}
+                    if(op){printf("Added task:"); printTask(ta);}
                     inserido = 1;
                     l->n++;
                     tmp = NULL;
@@ -110,7 +110,7 @@ int insert(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inseri
                 Cell *c = createCell(ta);
                 c->prev = l->last;
                 l->last = l->last->next = c;
-                if(op){printf("Task inserida:"); printTask(ta);}
+                if(op){printf("Added task:"); printTask(ta);}
                 inserido = 1;
                 l->n++;
             }
@@ -119,7 +119,7 @@ int insert(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> inseri
     return inserido;
 }
 
-Task* remove(List *l, char *name, int op){ //ATENCAO: retorna null se nao encontrou a tarefa
+Task* removeTaskFromList(List *l, char *name, int op){ //ATENCAO: retorna null se nao encontrou a tarefa
     Task *t = NULL;
     Cell *c = NULL;
     if( (c = searchForCell(l, name)) != NULL){
@@ -131,9 +131,9 @@ Task* remove(List *l, char *name, int op){ //ATENCAO: retorna null se nao encont
 
 void printList(List *l){
     if(l->n == 0){
-        printf("Nao ha tarefas.\n");
+        printf("There are no tasks!\n");
     }else{
-        printf("\nNumero de tarefas: %d", l->n);
+        printf("\nNumber of tasks on this day: %d", l->n);
         for(Cell *tmp = l->first->next; tmp != NULL; tmp = tmp->next){
             printTask(tmp->t);
         }

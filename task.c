@@ -29,14 +29,14 @@ Task* removeTask(Task *ta, int op){
 
 void printTask(Task *t){
     if(t != NULL){
-        printf("\n\tname: %s", t->name);
+        printf("\n\tName: %s", t->name);
         printTaskTime(t->tt);
     }
 }
 
-void printTaskTime(Task *t){
+void printOnlyTaskTime(Task *t){
     if(t != NULL){
-        printTaskTimeTime(t->tt);
+        printTaskTime(t->tt);
     }
 }
 

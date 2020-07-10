@@ -33,7 +33,7 @@ void printTaskTime(TaskTime *tt){
     printf("\n\tTASK TIME: %02d:%02d to %02d:%02d\n", tt->b_h, tt->b_m, tt->e_h, tt->e_m);
 }
 
-void printTaskTimeTime(TaskTime *tt){
+void printFTaskTime(TaskTime *tt){
     printf("\nFractionary task time:\n\tInicio: %f\n\tFim: %f\n", tt->b_time, tt->e_time);
 }
 
