@@ -1,4 +1,6 @@
 #include"interface.h"
+#ifndef INTERFACE_C
+#define INTERFACE_C
 
 int getDay(){
     int d = -1;
@@ -21,17 +23,17 @@ char* getName(){
 char* getTT(int op){
     getchar();
     char *str = (char*) malloc(sizeof(char)*6);
-    !op ? printf("Insert the starting time: ") : printf("Insert the end time: ");
+    !op ? printf("Insert the starting time (hh:mm): ") : printf("Insert the end time (hh:mm): ");
     fgets(str, 6, stdin);
 }
 
 void addTaskCase(Week *s, int op){
     char *name = getName();
-    int Day = getDay();
-    char *ttI = getTT(0);
-    char *ttF = getTT(1);
-    addTask(s, ttF, ttI, name, Day, op);
-    free(ttI); free(ttF);
+    int day = getDay();
+    char *ttB = getTT(0);
+    char *ttE = getTT(1);
+    addTask(s, ttE, ttB, name, day, op);
+    free(ttB); free(ttE);
 }
 
 void excTaskCase(Week *s){
@@ -78,3 +80,5 @@ void cngTaskDayCase(Week *s){
     free(name);
     getchar();
 }
+
+#endif

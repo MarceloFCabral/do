@@ -1,11 +1,23 @@
-#include"day.c"
+/** 
+ * Defines the Week struct and all the function headers related to it.
+ * @author Marcelo F. Cabral (marcelofc12@gmail.com)
+ */
 
+#include"day.c"
+#ifndef WEEK_H
+#define WEEK_H
+
+/**
+ * struct Week: holds a static 7-length array of Day structs.
+ * Also holds pointers to previous (struct Week *prev) and next (struct Week *next) weeks
+ * in a doubly linked list that will be implemented in the future to allow month-long planning. 
+ */
 typedef struct Week{
     Day days[7];
-    struct Week *prev, *next; //ponteiros serao usados em atualizacao para permitir o uso de meses;
+    struct Week *prev, *next;
 }Week;
 
-//funcoes e metodos de administracao de dados da Week
+
 Week* createWeek();
 void prtWeek(Week *s); //exibir todas as tarefas da Week (divididas por Day)
 void prtDay(Week *s, enum DotW d); //exibir tarefas em um Day
@@ -24,3 +36,5 @@ void cngTaskDay(Week *s, enum DotW src, enum DotW dest, char *name_src); //troca
 //funcoes e metodos de arThuvamento e recuperacao de dados gravados em memoria secundaria
 Week* readWeek();
 void saveWeek(Week *s);
+
+#endif

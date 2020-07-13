@@ -1,4 +1,11 @@
+/**
+ * Defines all the functions listed in "week.h".
+ * @author Marcelo F, Cabral (marcelofc12@gmail.com)
+ */
+
 #include"week.h"
+#ifndef WEEK_C
+#define WEEK_C
 
 Week* createWeek(){
     Week *s = (Week*) malloc(sizeof(Week));
@@ -149,3 +156,5 @@ void saveWeek(Week *w){
     fprintf(f, "%d", -1);
     fclose(f);
 }
+
+#endif

@@ -5,14 +5,14 @@ int main(int argc, char* argv[]){
     /*Testing IUP UI message window*/
     Ihandle *dlg, *label;
     IupOpen(&argc, &argv);
-    label = IupLabel("Welcome to \"Do\", your weekly agenda.");
+    label = IupLabel("Welcome to \"Do\", your weekly schedule");
     dlg = IupDialog(IupVbox(label, NULL));
     IupSetAttribute(dlg, "TITLE", "Do");
     IupShowXY(dlg, IUP_CENTER, IUP_CENTER);
     IupMainLoop();
     IupClose();
 
-    printf("Welcome to \"Do\", your weekly agenda.\n");
+    printf("Welcome to \"Do\", your weekly schedule.\n");
     Week *w = readWeek();
     int status = 1;
     while(status){
