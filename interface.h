@@ -1,3 +1,8 @@
+/**
+ * Declares all the headers for functions related to user interaction (in the command line).
+ * @author Marcelo F. Cabral (marcelofc12@gmail.com)
+ */
+
 #include"week.c"
 #ifndef INTERFACE_H
 #define INTERFACE_H

@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
                 prtDay(w, getDay());
                 break;
             case 3:
-                addTaskCase(w, 1); //infelizmente foi necessario encapsular a funcao addTask de "Week.c". O mesmo serve para demais funcoes com "Case" no fim
+                addTaskCase(w, 1);
                 break;
             case 4:
                 excTaskB(w, getDay(), 0);
