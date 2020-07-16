@@ -178,7 +178,7 @@ int insertTask(List *l, Task *ta, int op){ //codigos: 0 -> nao inserido; 1 -> in
 
 /**
  * Searches for and removes a cell that contains a certain task from a list, if the cell is found,
- * also deallocating the cell in memory (and all of it's dynamically allocated contents) or simply returning
+ * also deallocating the cell in memory (and all of its dynamically allocated contents) or simply returning
  * the removed cell's task's address, depending on the operation code.
  * @param l a pointer to a List struct.
  * @param name the task's name.

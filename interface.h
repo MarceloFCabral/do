@@ -1,5 +1,5 @@
 /**
- * Declares all the headers for functions related to user interaction (in the command line).
+ * Declares all the headers for functions related to user interaction (through the command line).
  * @author Marcelo F. Cabral (marcelofc12@gmail.com)
  */
 
